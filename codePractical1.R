@@ -59,3 +59,59 @@ abline(8/(n-2*p),0)
 identify(cooks.distance(fit),labels=rownames(cars))
 # rem: we se that observation 80 and 37 crosses the cook distance
 
+# check for leverage points
+plot(hatvalues(fit))
+abline(2*p/n,0)
+identify(hatvalues(fit), labels=rownames(cars))
+
+plot(weights, hundredOverMPG)
+text(weights[37], hundredOverMPG[37], rownames(cars)[37])
+text(weights[80], hundredOverMPG[80], rownames(cars)[80])
+plot(HPOverWeight, hundredOverMPG)
+text(HPOverWeight[37], hundredOverMPG[37], rownames(cars)[37])
+text(HPOverWeight[80], hundredOverMPG[80], rownames(cars)[80])
+
+
+# -------------------------- Second Analysis ------------------------
+# we now take away the observation 37 and 80
+cars2 <- cars[-c(37,80),]
+
+# the response y : 100 / City MPG
+hundredOverMPG <- rep(100,80) / cars2$CityMPG
+
+# the variables
+weights <- cars2$Weight
+
+HPOverWeight <- cars2$Horsepower / cars2$Weight
+
+
+fit = lm(hundredOverMPG ~ weights + HPOverWeight)
+summary(fit)
+confint(fit)
+
+#1 --- check for linearity : plot the variables against the standardised residuals
+plot(weights, rstandard(fit), xlab='weights', ylab='standardised residuals')
+plot(HPOverWeight, rstandard(fit), xlab='Horsepower over weight', ylab='standardised residuals')
+
+#now we plot the fitted y against the standardised residuals
+plot(fitted(fit), rstandard(fit), xlab='fitted values', ylab='standardised residuals', ylim=c(-3,3))
+# remarque: on voit sur le plot qu il y a une voir 2 valeurs abérantes. Il va falloir les identifier
+# homoskedasticity : ok
+
+#2 --- check for normality with QQ plot
+qqnorm(rstandard(fit))
+qqline(rstandard(fit))
+
+#3 --- Cook Distance, check for outliers and/or leverage points
+plot(cooks.distance(fit), xlab='Observations', ylab='Cook distance', main='Cook Distance Plot', ylim=c(0,0.2))
+p <- dim(model.matrix(fit))[2]
+n <- dim(model.matrix(fit))[1]
+abline(8/(n-2*p),0)
+
+plot(hatvalues(fit))
+abline(2*p/n,0)
+identify(hatvalues(fit), labels=rownames(cars2))
+
+
+
+

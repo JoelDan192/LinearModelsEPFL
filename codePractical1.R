@@ -1,0 +1,61 @@
+# Practical number 1
+# Matteo and Joel
+
+load('cars.RData')
+
+# ------------------------- Observation of the DATA --------------------------
+
+# the response y : 100 / City MPG
+hundredOverMPG <- rep(100,82) / cars$CityMPG
+
+# the variables
+weights <- cars$Weight
+
+HPOverWeight <- cars$Horsepower / cars$Weight
+
+# Look if there is a correlation between our y and the variable we are going to use
+plot(weights, hundredOverMPG, xlab='Weights', ylab='100 / City MPG', main = 'Plot of the weights against the fuel efficiency')
+plot(HPOverWeight, hundredOverMPG)
+
+# correlations
+cor(weights, hundredOverMPG)
+cor(HPOverWeight, hundredOverMPG)
+
+# Boxplots of the y and the variables
+boxplot(hundredOverMPG, main='Fuel efficiency ( 100 / city MPG )')
+boxplot(weights, main='Weights of the cars')
+boxplot(HPOverWeight, main='Horsepower over the weight')
+
+# Scatter plot
+pairs(cbind(hundredOverMPG, weights, HPOverWeight), main='scatter plot of the y and the variables')
+
+
+# -------------------------- The Fit -----------------------------
+
+fit = lm(hundredOverMPG ~ weights + HPOverWeight)
+summary(fit)
+confint(fit)  #  buid confidence intervals
+
+# -------------------------- Fist Analysis -----------------------
+
+#1 --- check for linearity : plot the variables against the standardised residuals
+plot(weights, rstandard(fit), xlab='weights', ylab='standardised residuals')
+plot(HPOverWeight, rstandard(fit), xlab='Horsepower over weight', ylab='standardised residuals')
+
+#now we plot the fitted y against the standardised residuals
+plot(fitted(fit), rstandard(fit), xlab='fitted values', ylab='standardised residuals', ylim=c(-3,3))
+# remarque: on voit sur le plot qu il y a une voir 2 valeurs abérantes. Il va falloir les identifier
+# homoskedasticity : ok
+
+#2 --- check for normality with QQ plot
+qqnorm(rstandard(fit))
+qqline(rstandard(fit))
+
+#3 --- Cook Distance, check for outliers and/or leverage points
+plot(cooks.distance(fit), xlab='Observations', ylab='Cook distance', main='Cook Distance Plot')
+p <- dim(model.matrix(fit))[2]
+n <- dim(model.matrix(fit))[1]
+abline(8/(n-2*p),0)
+identify(cooks.distance(fit),labels=rownames(cars))
+# rem: we se that observation 80 and 37 crosses the cook distance
+

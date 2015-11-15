@@ -60,7 +60,8 @@ abline(8/(n-2*p),0)
 identify(cooks.distance(fit),labels=rownames(cars))
 # rem: we se that observation 80 and 37 crosses the cook distance
 
-# check for leverage points
+# check for leverage points - we see that 80 is over the 2p/n line => maybe leverage point
+# and we also saw that observation 80 is an outlier => this observation may cause real trouble in the fit
 plot(hatvalues(fit))
 abline(2*p/n,0)
 identify(hatvalues(fit), labels=rownames(cars))
@@ -88,7 +89,7 @@ plot(fitted(fit3), rstandard(fit3), xlab='fitted values', ylab='standardised res
 qqnorm(rstandard(fit3))
 qqline(rstandard(fit3))
 
-# ------------------
+# ---------------------------------
 
 cars4 <- cars[-c(80),]
 hundredOverMPG <- rep(100,81) / cars4$CityMPG
@@ -118,32 +119,31 @@ weights <- cars2$Weight
 HPOverWeight <- cars2$Horsepower / cars2$Weight
 
 
-fit = lm(hundredOverMPG ~ weights + HPOverWeight)
-summary(fit)
-confint(fit)
+fit2 = lm(hundredOverMPG ~ weights + HPOverWeight)
+summary(fit2)
+confint(fit2)
 
 #1 --- check for linearity : plot the variables against the standardised residuals
-plot(weights, rstandard(fit), xlab='weights', ylab='standardised residuals')
-plot(HPOverWeight, rstandard(fit), xlab='Horsepower over weight', ylab='standardised residuals')
+plot(weights, rstandard(fit2), xlab='weights', ylab='standardised residuals')
+plot(HPOverWeight, rstandard(fit2), xlab='Horsepower over weight', ylab='standardised residuals')
 
 #now we plot the fitted y against the standardised residuals
-plot(fitted(fit), rstandard(fit), xlab='fitted values', ylab='standardised residuals', ylim=c(-3,3))
-# remarque: on voit sur le plot qu il y a une voir 2 valeurs abérantes. Il va falloir les identifier
+plot(fitted(fit2), rstandard(fit2), xlab='fitted values', ylab='standardised residuals', ylim=c(-3,3))
 # homoskedasticity : ok
 
 #2 --- check for normality with QQ plot
-qqnorm(rstandard(fit))
-qqline(rstandard(fit))
+qqnorm(rstandard(fit2))
+qqline(rstandard(fit2))
 
 #3 --- Cook Distance, check for outliers and/or leverage points
-plot(cooks.distance(fit), xlab='Observations', ylab='Cook distance', main='Cook Distance Plot', ylim=c(0,0.2))
-p <- dim(model.matrix(fit))[2]
-n <- dim(model.matrix(fit))[1]
+plot(cooks.distance(fit2), xlab='Observations', ylab='Cook distance', main='Cook Distance Plot', ylim=c(0,0.2))
+p <- dim(model.matrix(fit2))[2]
+n <- dim(model.matrix(fit2))[1]
 abline(8/(n-2*p),0)
 
-plot(hatvalues(fit))
+plot(hatvalues(fit2))
 abline(2*p/n,0)
- identify(hatvalues(fit), labels=rownames(cars2))
+identify(hatvalues(fit2), labels=rownames(cars2))
 
 
 

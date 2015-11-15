@@ -27,6 +27,7 @@ boxplot(weights, main='Weights of the cars')
 boxplot(HPOverWeight, main='Horsepower over the weight')
 
 # Scatter plot
+
 pairs(cbind(hundredOverMPG, weights, HPOverWeight), main='scatter plot of the y and the variables')
 
 
@@ -71,8 +72,40 @@ plot(HPOverWeight, hundredOverMPG)
 text(HPOverWeight[37], hundredOverMPG[37], rownames(cars)[37])
 text(HPOverWeight[80], hundredOverMPG[80], rownames(cars)[80])
 
+# -------------------------- Second Analysis ( only without one the outliers ) ------------
+
+cars3 <- cars[-c(37),]
+hundredOverMPG <- rep(100,81) / cars3$CityMPG
+HPOverWeight <- cars3$Horsepower / cars3$Weight
+weights <- cars3$Weight
+
+fit3 = lm(hundredOverMPG ~ weights + HPOverWeight)
+summary(fit3)
+confint(fit3)
+
+plot(fitted(fit3), rstandard(fit3), xlab='fitted values', ylab='standardised residuals', ylim=c(-3,3))
+
+qqnorm(rstandard(fit3))
+qqline(rstandard(fit3))
+
+# ------------------
+
+cars4 <- cars[-c(80),]
+hundredOverMPG <- rep(100,81) / cars4$CityMPG
+HPOverWeight <- cars4$Horsepower / cars4$Weight
+weights <- cars4$Weight
+
+fit4 = lm(hundredOverMPG ~ weights + HPOverWeight)
+summary(fit4)
+confint(fit4)
+
+plot(fitted(fit4), rstandard(fit4), xlab='fitted values', ylab='standardised residuals', ylim=c(-3,3))
+
+qqnorm(rstandard(fit4))
+qqline(rstandard(fit4))
 
 # -------------------------- Second Analysis ------------------------
+
 # we now take away the observation 37 and 80
 cars2 <- cars[-c(37,80),]
 
@@ -110,7 +143,7 @@ abline(8/(n-2*p),0)
 
 plot(hatvalues(fit))
 abline(2*p/n,0)
-identify(hatvalues(fit), labels=rownames(cars2))
+ identify(hatvalues(fit), labels=rownames(cars2))
 
 
 

@@ -1,0 +1,1 @@
+Try vim as commit editor for git

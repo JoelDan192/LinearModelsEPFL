@@ -1,4 +1,6 @@
 load('cars.RData')
+install.packages("xtable");
+library(xtable)
 
 # the response y : 100 / City MPG
 hundredOverMPG <- rep(100,82) / cars$CityMPG
@@ -22,4 +24,48 @@ anova(fit2)
 # On veut maintenant utiliser les variables de 11 à 26 pour créer notre model
 newData <- cars[ ,11:26]
 
-newFit <- lm(y ~ ., data = newData)
+FullFit <- lm(hundredOverMPG ~ ., data = newData)
+summary(FullFit)
+
+# Latex table
+summaryFullFit <- xtable(summary(FullFit))
+print(summaryFullFit)
+
+# VIF of the full model
+library(car)
+vif(FullFit)
+
+# ------ Model Construction : Backward and Forward selection using AIC and BIC
+
+# AIC, Backward
+f1 <- lm(hundredOverMPG ~ ., data = newData)
+f1.backward <- step(f1, direction = "backward")
+summary(f1.backward)
+vif(f1.backward)
+# AIC, Forward
+f2 <- lm(hundredOverMPG ~ 1, data = newData)
+my.scope <- formula(newData)
+f2.forward <- step(f2, scope = my.scope, direction = "forward", data = newData)
+summary(f2.forward)
+vif(f2.forward)
+
+# BIC, Backward
+f3 <- lm(hundredOverMPG ~ ., data = newData) # Fitting model using all the covariates
+f3.backward <- step(f3, direction = "backward", k=log(length(newData)))
+summary(f3.backward)
+vif(f3.backward)
+# BIC, Forward
+f4 <- lm(hundredOverMPG ~ 1, data = newData) # Fitting the model with only one varialbe, the 1 column
+my.scope <- formula(newData)
+f4.forward <- step(f4, scope = my.scope, direction = "forward", data = newData, k=log(length(newData)))
+summary(f4.forward)
+vif(f4.forward)
+
+
+# -------------- Model sans les prédicteurs montrant un signe de multicollinéarité -----
+newData2 = cars[,-c(1,2,3,4,5,6,7,8,9,10,17,19,20,21,22)]
+
+
+
+
+

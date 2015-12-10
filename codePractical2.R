@@ -1,5 +1,5 @@
 load('cars.RData')
-install.packages("xtable");
+#install.packages("xtable");
 library(xtable)
 
 # the response y : 100 / City MPG
@@ -44,20 +44,20 @@ summary(f1.backward)
 vif(f1.backward)
 # AIC, Forward
 f2 <- lm(hundredOverMPG ~ 1, data = newData)
-my.scope <- formula(newData)
+my.scope <- formula(data.frame(hundredOverMPG, newData))
 f2.forward <- step(f2, scope = my.scope, direction = "forward", data = newData)
 summary(f2.forward)
 vif(f2.forward)
 
 # BIC, Backward
 f3 <- lm(hundredOverMPG ~ ., data = newData) # Fitting model using all the covariates
-f3.backward <- step(f3, direction = "backward", k=log(length(newData)))
+f3.backward <- step(f3, direction = "backward", k=log(nrow(newData)))
 summary(f3.backward)
 vif(f3.backward)
 # BIC, Forward
 f4 <- lm(hundredOverMPG ~ 1, data = newData) # Fitting the model with only one varialbe, the 1 column
-my.scope <- formula(newData)
-f4.forward <- step(f4, scope = my.scope, direction = "forward", data = newData, k=log(length(newData)))
+my.scope <- formula(data.frame(hundredOverMPG, newData))
+f4.forward <- step(f4, scope = my.scope, direction = "forward", data = newData, k=log(nrow(newData)))
 summary(f4.forward)
 vif(f4.forward)
 
@@ -91,20 +91,20 @@ summary(f1.backward)
 vif(f1.backward)
 # AIC, Forward
 f2 <- lm(hundredOverMPG ~ 1, data = newData2)
-my.scope <- formula(newData2)
+my.scope <- formula(data.frame(hundredOverMPG, newData2))
 f2.forward <- step(f2, scope = my.scope, direction = "forward", data = newData2)
 summary(f2.forward)
 vif(f2.forward)
 
 # BIC, Backward
 f3 <- lm(hundredOverMPG ~ ., data = newData2) # Fitting model using all the covariates
-f3.backward <- step(f3, direction = "backward", k=log(length(newData2)))
+f3.backward <- step(f3, direction = "backward", k=log(nrow(newData2)))
 summary(f3.backward)
 vif(f3.backward)
 # BIC, Forward
 f4 <- lm(hundredOverMPG ~ 1, data = newData2) # Fitting the model with only one varialbe, the 1 column
-my.scope <- formula(newData2)
-f4.forward <- step(f4, scope = my.scope, direction = "forward", data = newData2, k=log(length(newData2)))
+my.scope <- formula(data.frame(hundredOverMPG, newData2))
+f4.forward <- step(f4, scope = my.scope, direction = "forward", data = newData2, k=log(nrow(newData2)))
 summary(f4.forward)
 vif(f4.forward)
 

@@ -108,6 +108,40 @@ f4.forward <- step(f4, scope = my.scope, direction = "forward", data = newData2,
 summary(f4.forward)
 vif(f4.forward)
 
+# We see that we have two models, one with the BIC ( backward anf forward give the same model)
+# and one with the AIC
 
+# ---------------------------- DIAGNOSTICS FOR THE TWO MODELS ------------------------------
 
+modelA <- f2.forward
+modelB <- f4.forward
 
+# Confidence interval at 95%
+confint(modelA,level=0.95)
+confint(modelB,level=0.95)
+
+# Plot fitted values against standardised residual
+plot(modelA$fitted.values, rstandard(modelA), xlab="Fitted Values", ylab="Standardised residuals")
+plot(modelB$fitted.values, rstandard(modelB), xlab="Fitted Values", ylab="Standardised residuals")
+
+# QQ plot
+qqnorm(rstandard(modelA))
+qqline(rstandard(modelA))
+
+qqnorm(rstandard(modelB))
+qqline(rstandard(modelB))
+
+# Cook Distance
+plot(cooks.distance(modelA), xlab='Observations', ylab='Cook distance', main='Cook Distance Plot', ylim=c(0,0.2))
+p <- dim(model.matrix(modelA))[2]
+n <- dim(model.matrix(modelA))[1]
+abline(8/(n-2*p),0)
+plot(hatvalues(modelA))
+abline(2*p/n,0)
+
+plot(cooks.distance(modelB), xlab='Observations', ylab='Cook distance', main='Cook Distance Plot', ylim=c(0,0.2))
+p <- dim(model.matrix(modelB))[2]
+n <- dim(model.matrix(modelB))[1]
+abline(8/(n-2*p),0)
+plot(hatvalues(modelB))
+abline(2*p/n,0)

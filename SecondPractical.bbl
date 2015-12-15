@@ -1,0 +1,19 @@
+\begin{thebibliography}{1}
+
+\bibitem{ARA}
+N.~Draper and H.~Smith.
+\newblock {\em Applied Regression Analysis}.
+\newblock Wiley, New York, NY, third edition, 1998.
+
+\bibitem{ESL}
+Trevor~J. Hastie, Robert~John Tibshirani, and Jerome~H. Friedman.
+\newblock {\em The elements of statistical learning : data mining, inference,
+  and prediction}.
+\newblock Springer series in statistics. Springer, New York, 2009.
+
+\bibitem{R}
+{R Core Team}.
+\newblock {\em R: A Language and Environment for Statistical Computing}.
+\newblock R Foundation for Statistical Computing, Vienna, Austria, 2015.
+
+\end{thebibliography}

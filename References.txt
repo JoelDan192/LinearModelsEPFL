@@ -1,0 +1,25 @@
+@Manual{R,
+    title = {R: A Language and Environment for Statistical Computing},
+    author = {{R Core Team}},
+    organization = {R Foundation for Statistical Computing},
+    address = {Vienna, Austria},
+    year = {2015},
+    url = {https://www.R-project.org/},
+}
+  
+@book{ESL,
+    title = "The elements of statistical learning : data mining, inference, and prediction",
+    author = "Hastie, Trevor J. and Tibshirani, Robert John and Friedman, Jerome H.",
+    series = "Springer series in statistics",
+    publisher = "Springer",
+    address = "New York",
+    year = 2009
+}
+@book{ARA,
+    AUTHOR       = {N. Draper and H. Smith},
+    TITLE        = {Applied Regression Analysis},
+    EDITION      = {third},
+    PUBLISHER    = {Wiley},
+    ADDRESS      = {New York, NY},
+    YEAR         = {1998}  
+}

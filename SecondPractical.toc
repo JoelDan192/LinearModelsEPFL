@@ -1,0 +1,19 @@
+\contentsline {section}{\numberline {I}Introduction}{1}
+\contentsline {section}{\numberline {II}The data}{1}
+\contentsline {section}{\numberline {III}Methodology}{3}
+\contentsline {subsection}{\numberline {III.I}ANOVA}{3}
+\contentsline {subsection}{\numberline {III.II}Forward Selection and Backward Elimination}{3}
+\contentsline {subsection}{\numberline {III.III}AIC/BIC}{3}
+\contentsline {section}{\numberline {IV}Analysis}{4}
+\contentsline {subsection}{\numberline {IV.I}Analysis of Variance on the original model}{4}
+\contentsline {subsection}{\numberline {IV.II}Model selection and multicollinearity}{4}
+\contentsline {subsubsection}{\numberline {IV.II.1}Individual tests}{5}
+\contentsline {subsubsection}{\numberline {IV.II.2}Model Selection}{5}
+\contentsline {subparagraph}{Models obtained with AIC}{5}
+\contentsline {subparagraph}{Models obtained with BIC}{6}
+\contentsline {subsubsection}{\numberline {IV.II.3}Dealing with multicollinearity}{6}
+\contentsline {subparagraph}{Models obtained with AIC}{6}
+\contentsline {subparagraph}{Models obtained with BIC}{7}
+\contentsline {section}{\numberline {V}Discussion and conclusions}{8}
+\contentsline {section}{\numberline {A}Appendix}{9}
+\contentsline {section}{References}{13}
